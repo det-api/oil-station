@@ -1,0 +1,65 @@
+const userRoute = require("express").Router();
+import {
+  deleteUserHandler,
+  getUserByAdminHandler,
+  getUserHandler,
+  loginUserHandler,
+  registerUserHandler,
+  userAddPermitHandler,
+  userAddRoleHandler,
+  userRemovePermitHandler,
+  userRemoveRoleHandler,
+} from "../controller/user.controller";
+import { roleValidator } from "../middleware/roleValidator";
+import { validateToken } from "../middleware/validator";
+
+//register user
+userRoute.post("/register", registerUserHandler);
+
+//login user
+userRoute.post("/login", loginUserHandler);
+
+//getuser
+userRoute.get("/", validateToken, getUserHandler);
+
+//delete each user
+userRoute.delete("/", validateToken, deleteUserHandler);
+
+//admin routes
+//beware deleting all user route
+userRoute.delete("/admin", validateToken, deleteUserHandler);
+userRoute.get(
+  "/admin",
+  validateToken,
+  roleValidator("admin"),
+  getUserByAdminHandler
+);
+//adding role in user
+userRoute.patch(
+  "/add/role",
+  validateToken,
+  roleValidator("admin"),
+  userAddRoleHandler
+);
+userRoute.patch(
+  "/remove/role",
+  validateToken,
+  roleValidator("admin"),
+  userRemoveRoleHandler
+);
+
+//adding permit in user
+userRoute.patch(
+  "/add/permit",
+  validateToken,
+  roleValidator("admin"),
+  userAddPermitHandler
+);
+userRoute.patch(
+  "/remove/permit",
+  validateToken,
+  roleValidator("admin"),
+  userRemovePermitHandler
+);
+
+export default userRoute;
