@@ -18,7 +18,7 @@ const fuelInSchema = new Schema({
   tank: { type: String, required: true },
   station: { type: String, required: true },
   recieveVolume: { type: Number, required: true },
-  date: { type: Date, default: Date.now },
+  date: { type: Date, default: new Date().toLocaleDateString() },
 });
 
 const fuelInModel = mongoose.model<fuelInDocument>('fuelIn' , fuelInSchema)

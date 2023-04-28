@@ -40,10 +40,10 @@ export const roleAddPermit = async (roleId : FilterQuery<roleDocument> ,  permit
     }
 }
 
-export const roleRemovePermit = async (query : FilterQuery<roleDocument> , permitId : permitDocument["_id"])=>{
+export const roleRemovePermit = async (roleId : FilterQuery<roleDocument> , permitId : permitDocument["_id"])=>{
     try{
-        await roleModel.findOneAndUpdate(query , {$pull :{permits : permitId}})
-        return roleModel.find(query)
+        await roleModel.findByIdAndUpdate(roleId , {$pull :{permits : permitId}})
+        return roleModel.findById(roleId)
     }catch(e) {
         throw new Error (e)
     }

@@ -10,6 +10,9 @@ import testRoute from "./router/test.routes";
 import mqtt from "mqtt";
 import roleRoute from "./router/role.routes";
 import permitRoute from "./router/permit.routes";
+import stationDetailRoute from "./router/stationDetail.routes";
+import dailyPriceRoute from "./router/dailyPrice.routes";
+import dailyReportRoute from "./router/dailyReport.routes";
 
 const app = express();
 app.use(express.json());
@@ -71,6 +74,10 @@ app.use("/permit", permitRoute);
 
 app.use("/fuelIn", fuelInRoute);
 app.use("/nozzle", nozzleRoute);
+
+app.use("/station-detail" , stationDetailRoute)
+app.use("/daily-price" , dailyPriceRoute)
+app.use("/daily-report" , dailyReportRoute)
 
 app.use("/test", testRoute);
 

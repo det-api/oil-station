@@ -24,6 +24,7 @@ export const loginUser = async ({
   try {
     let user = await userModel
       .findOne({ email })
+      .populate("roles permits")
       .select("-__v");
 
     if (!user || !compass(password, user.password)) {
@@ -46,6 +47,7 @@ export const getUser = async (query: FilterQuery<UserDocument>) => {
     return await userModel
       .find(query)
       .lean()
+      .populate({ path: "roles permits" })
       .select("-password -__v");
   } catch (e) {
     throw new Error(e);
@@ -65,7 +67,9 @@ export const userAddRole = async (
   roleId: UserDocument["_id"]
 ) => {
   try {
-    await userModel.findByIdAndUpdate(userId, { $push: { roles: roleId } });
+    await userModel
+      .findByIdAndUpdate(userId, { $push: { roles: roleId } })
+      .select("- password");
     return await userModel.findById(userId);
   } catch (e: any) {
     throw new Error(e);
@@ -77,7 +81,9 @@ export const userRemoveRole = async (
   roleId: UserDocument["_id"]
 ) => {
   try {
-    await userModel.findByIdAndUpdate(userId, { $pull: { roles: roleId } });
+    await userModel
+      .findByIdAndUpdate(userId, { $pull: { roles: roleId } })
+      .select("- password");
     return await userModel.findById(userId);
   } catch (e: any) {
     throw new Error(e);

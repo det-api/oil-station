@@ -27,9 +27,7 @@ export const validateToken = async (
   }
   try {
     let decoded = checkToken(token);
-    console.log({ _id: decoded._id });
     let user = await getUser({ _id: decoded._id });
-    // console.log(user)
     req.body.user = user;
   } catch (e: any) {
     return next(new Error(e));

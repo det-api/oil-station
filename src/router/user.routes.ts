@@ -28,12 +28,8 @@ userRoute.delete("/", validateToken, deleteUserHandler);
 //admin routes
 //beware deleting all user route
 userRoute.delete("/admin", validateToken, deleteUserHandler);
-userRoute.get(
-  "/admin",
-  validateToken,
-  roleValidator("admin"),
-  getUserByAdminHandler
-);
+userRoute.get("/admin", validateToken, getUserByAdminHandler);
+
 //adding role in user
 userRoute.patch(
   "/add/role",
@@ -41,6 +37,7 @@ userRoute.patch(
   roleValidator("admin"),
   userAddRoleHandler
 );
+
 userRoute.patch(
   "/remove/role",
   validateToken,
