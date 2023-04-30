@@ -4,11 +4,36 @@ import {
   getFuelInHandler,
   updateFuelInHandler,
 } from "../controller/fuelIn.controller";
+import { hasAnyPermit } from "../middleware/permitValidator";
+import { roleValidator } from "../middleware/roleValidator";
+import { validateAll, validateToken } from "../middleware/validator";
+import { allSchemaId, fuelInSchema } from "../schema/scheama";
 const fuelInRoute = require("express").Router();
 
-fuelInRoute.get("/", getFuelInHandler);
-fuelInRoute.post("/", addFuelInHandler);
-fuelInRoute.patch("/", updateFuelInHandler);
-fuelInRoute.delete("/", deleteFuelInHandler);
+fuelInRoute.get("/", validateToken, hasAnyPermit(["view"]), getFuelInHandler);
+fuelInRoute.post(
+  "/",
+  validateToken,
+  roleValidator("admin"),
+  hasAnyPermit(["add"]),
+  validateAll(fuelInSchema),
+  addFuelInHandler
+);
+fuelInRoute.patch(
+  "/",
+  validateToken,
+  roleValidator("admin"),
+  hasAnyPermit(["edit"]),
+  validateAll(allSchemaId),
+  updateFuelInHandler
+);
+fuelInRoute.delete(
+  "/",
+  validateToken,
+  roleValidator("admin"),
+  hasAnyPermit(["delete"]),
+  validateAll(allSchemaId),
+  deleteFuelInHandler
+);
 
-export default fuelInRoute
+export default fuelInRoute;

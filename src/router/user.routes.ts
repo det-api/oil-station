@@ -10,6 +10,7 @@ import {
   userRemovePermitHandler,
   userRemoveRoleHandler,
 } from "../controller/user.controller";
+import { hasAnyPermit } from "../middleware/permitValidator";
 import { roleValidator } from "../middleware/roleValidator";
 import { validateToken } from "../middleware/validator";
 
@@ -35,6 +36,7 @@ userRoute.patch(
   "/add/role",
   validateToken,
   roleValidator("admin"),
+  hasAnyPermit(["add"]),
   userAddRoleHandler
 );
 
@@ -42,6 +44,7 @@ userRoute.patch(
   "/remove/role",
   validateToken,
   roleValidator("admin"),
+  hasAnyPermit(["delete"]),
   userRemoveRoleHandler
 );
 
@@ -50,12 +53,14 @@ userRoute.patch(
   "/add/permit",
   validateToken,
   roleValidator("admin"),
+  hasAnyPermit(["add"]),
   userAddPermitHandler
 );
 userRoute.patch(
   "/remove/permit",
   validateToken,
   roleValidator("admin"),
+  hasAnyPermit(["delete"]),
   userRemovePermitHandler
 );
 

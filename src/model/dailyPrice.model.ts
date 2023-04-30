@@ -1,6 +1,5 @@
 import mongoose, { Schema } from "mongoose";
 import { stationDetailDocument } from "./stationDetail.model";
-import { date, string } from "zod";
 
 export interface dailyPriceDocument extends mongoose.Document {
   92: number;

@@ -13,6 +13,7 @@ import permitRoute from "./router/permit.routes";
 import stationDetailRoute from "./router/stationDetail.routes";
 import dailyPriceRoute from "./router/dailyPrice.routes";
 import dailyReportRoute from "./router/dailyReport.routes";
+import detailSaleRoute from "./router/detailSale.routes";
 
 const app = express();
 app.use(express.json());
@@ -57,7 +58,7 @@ client.on("connect", connect);
 //topic come from mqtt
 
 client.on("message", async (topic, message) => {
-  console.log(topic, "///", message.toString());
+  // console.log(topic, "///", message.toString());
 });
 
 // request routes
@@ -75,9 +76,10 @@ app.use("/permit", permitRoute);
 app.use("/fuelIn", fuelInRoute);
 app.use("/nozzle", nozzleRoute);
 
-app.use("/station-detail" , stationDetailRoute)
-app.use("/daily-price" , dailyPriceRoute)
-app.use("/daily-report" , dailyReportRoute)
+app.use("/station-detail", stationDetailRoute);
+app.use("/daily-price", dailyPriceRoute);
+app.use("/daily-report", dailyReportRoute);
+app.use("/detail-sale", detailSaleRoute);
 
 app.use("/test", testRoute);
 

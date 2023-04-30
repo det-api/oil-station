@@ -67,10 +67,10 @@ export const userAddRole = async (
   roleId: UserDocument["_id"]
 ) => {
   try {
-    await userModel
-      .findByIdAndUpdate(userId, { $push: { roles: roleId } })
-      .select("- password");
-    return await userModel.findById(userId);
+    await userModel.findByIdAndUpdate(userId, {
+      $push: { roles: roleId },
+    });
+    return await userModel.findById(userId).select("-password -__v");
   } catch (e: any) {
     throw new Error(e);
   }
@@ -81,10 +81,10 @@ export const userRemoveRole = async (
   roleId: UserDocument["_id"]
 ) => {
   try {
-    await userModel
-      .findByIdAndUpdate(userId, { $pull: { roles: roleId } })
-      .select("- password");
-    return await userModel.findById(userId);
+    await userModel.findByIdAndUpdate(userId, {
+      $pull: { roles: roleId },
+    });
+    return await userModel.findById(userId).select("-password -__v");
   } catch (e: any) {
     throw new Error(e);
   }

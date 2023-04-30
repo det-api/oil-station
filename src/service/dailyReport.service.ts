@@ -41,3 +41,15 @@ export const deleteDailyReport = async (query: FilterQuery<dailyReportDocument>)
     throw new Error(e);
   }
 };
+
+
+export const getDailyReportByDate = async (
+  d1: any,
+  d2: any
+): Promise<dailyReportDocument[]> => {
+  console.log(d1)
+  let result = await dailyReportModel.find({
+    date: { $gte: `${d1}T00:00:00Z`, $lte: `${d2}T23:59:59Z` },
+  });
+  return result;
+};
