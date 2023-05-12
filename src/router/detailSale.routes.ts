@@ -22,7 +22,6 @@ detailSaleRoute.post(
   validateToken,
   roleValidator("admin"),
   hasAnyPermit(["add"]),
-  validateAll(detailSaleSchema),
   addDetailSaleHandler
 );
 detailSaleRoute.patch(

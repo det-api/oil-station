@@ -1,33 +1,33 @@
 import mongoose, { Schema } from "mongoose";
 
 export interface detailSaleDocument extends mongoose.Document {
-  dailyReportId: string;
-  vocono: string;
+  pprd_license_number: string;
+  voucher_number: string;
   carNo: string;
   vehicleType: string;
-  nozzleNo: number;
-  fuelType: string;
-  liter: number;
-  amount: number;
-  startPoint: number;
-  endPoint: number;
+  // nozzleNo: number;
+  fuel_type: string;
+  sale_price: number;
+  sale_liter: number;
+  total_price: number;
+  totalizer_liter: number;
   createAt: Date;
 }
 
 const detailSaleSchema = new Schema({
-  dailyReportId: { type: Schema.Types.ObjectId },
-  vocono: { type: String, required: true, unique: true },
+  pprd_license_number: { type: Schema.Types.ObjectId },
+  voucher_number: { type: String, required: true, unique: true },
   carNo: { type: String, default: null }, //manual
   vehicleType: { type: String, default: "car" }, //manual
-  nozzleNo: { type: Number, required: true },
-  fuelType: { type: String, require: true },
-  liter: { type: Number, default: 0 },
-  amount: { type: Number, default: 0 },
-  startPoint: { type: Number, default: 0 },
-  endPoint: { type: Number, default: 0 },
+  // nozzleNo: { type: Number, required: true },
+  fuel_type: { type: String, require: true },
+  sale_price: { type: Number, default: 0 },
+  sale_liter: { type: Number, default: 0 },
+  total_price: { type: Number, default: 0 },
+  totalizer_liter: { type: Number, default: 0 },
   createAt: { type: Date, default: new Date() },
 });
-    
+
 const detailSaleModel = mongoose.model<detailSaleDocument>(
   "detailSale",
   detailSaleSchema

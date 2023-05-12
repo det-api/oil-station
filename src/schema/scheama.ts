@@ -55,7 +55,7 @@ export const detailSaleSchema = object({
     vocono: string({
       required_error: "vocono is required",
     }),
-    nozzleNo: number({
+    nozzleNo: string({
       required_error: "nozzleNo is required",
     }),
     fuelType: string({

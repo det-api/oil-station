@@ -1,5 +1,6 @@
 import { FilterQuery, UpdateQuery } from "mongoose";
 import detailSaleModel, { detailSaleDocument } from "../model/detailSale.model";
+
 export const getDetailSale = async (query: FilterQuery<detailSaleDocument>) => {
   try {
     return await detailSaleModel.find(query).lean().select("-__v");
@@ -50,9 +51,12 @@ export const getDetailSaleByFuelType = async (
     dailyReportId: dailyReportId,
     fuelType: fuelType,
   });
-  let fuelLength = fuel.length? + 1 : 0;
+  let fuelLength = fuel.length ? +1 : 0;
   let fuelLiter = fuel
     .map((ea) => ea["liter"])
-    .reduce((pv: number, cv: number): number => pv + cv,0);
-    return { count : fuelLength , liter : fuelLiter }
+    .reduce((pv: number, cv: number): number => pv + cv, 0);
+  let fuelAmount = fuel
+    .map((ea) => ea["amount"])
+    .reduce((pv: number, cv: number): number => pv + cv, 0);
+  return { count: fuelLength, liter: fuelLiter, price: fuelAmount };
 };

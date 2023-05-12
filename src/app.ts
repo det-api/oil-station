@@ -14,6 +14,8 @@ import stationDetailRoute from "./router/stationDetail.routes";
 import dailyPriceRoute from "./router/dailyPrice.routes";
 import dailyReportRoute from "./router/dailyReport.routes";
 import detailSaleRoute from "./router/detailSale.routes";
+import { backup } from "./backup/backup";
+import {migrate} from "./migration/migrator"
 
 const app = express();
 app.use(express.json());
@@ -26,6 +28,9 @@ const server = require("http").createServer(app);
 const port = config.get<number>("port");
 const host = config.get<string>("host");
 const dbUrl = config.get<string>("dbUrl");
+const mqttUrl = config.get<string>("mqttUrl");
+const mqttUser = config.get<string>("mqttUser");
+const mqttPassword = config.get<string>("mqttPassword");
 
 //mongodb connection
 
@@ -33,13 +38,10 @@ mongoose.connect(dbUrl);
 
 //mqtt connection
 
-export const client = mqtt.connect(
-  "mqtts://f98a3730d6c3454b8cbf7d6c4f13cb69.s1.eu.hivemq.cloud",
-  {
-    username: "lmo-12",
-    password: "Asdffdsa-4580",
-  }
-);
+export const client = mqtt.connect(mqttUrl, {
+  username: mqttUser,
+  password: mqttPassword,
+});
 
 let sub_topic = "general";
 
@@ -93,7 +95,12 @@ app.use((err: any, req: Request, res: Response, next: NextFunction) => {
   });
 });
 
-// create server
+//migrate
+migrate();
+
+// back up
+
+// backup(dbUrl);
 
 server.listen(port, () =>
   console.log(`server is running in  http://${host}:${port}`)

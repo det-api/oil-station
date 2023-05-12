@@ -21,6 +21,7 @@ export const addDetailSaleHandler = async (
   next: NextFunction
 ) => {
   try {
+    console.log(req.body)
     let result = await addDetailSale(req.body);
     fMsg(res, "New DetailSale data was added", result);
   } catch (e) {

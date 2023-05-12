@@ -1,18 +1,23 @@
 import UserModel from "../model/user.model";
 
-// import fs from "fs";
 const fs = require("fs");
 
-const migrate = async () => {
-  try {
-    let data = fs.readFileSync("./user.json");
-    let result = await UserModel.create(JSON.stringify(data));
-    if (result) {
-      console.log("created");
+export const migrate = () => {
+  fs.readFile("./src/migration/user.json", async (err, data) => {
+    if (err) {
+      console.log(err);
+    } else {
+      try{
+        let result = JSON.parse(data.toString())
+        let ret = await UserModel.create(result);
+        if (ret){
+          console.log("added")
+        }
+      }catch{
+        console.log("already exist")
+      }
+
     }
-  } catch (e) {
-    console.log(e);
-  }
+  });
 };
 
-migrate();
