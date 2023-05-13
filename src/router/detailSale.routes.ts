@@ -17,13 +17,7 @@ detailSaleRoute.get(
   hasAnyPermit(["view"]),
   getDetailSaleHandler
 );
-detailSaleRoute.post(
-  "/",
-  validateToken,
-  roleValidator("admin"),
-  hasAnyPermit(["add"]),
-  addDetailSaleHandler
-);
+detailSaleRoute.post("/", addDetailSaleHandler);
 detailSaleRoute.patch(
   "/",
   validateToken,
