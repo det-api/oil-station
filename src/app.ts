@@ -16,6 +16,7 @@ import dailyReportRoute from "./router/dailyReport.routes";
 import detailSaleRoute from "./router/detailSale.routes";
 import { backup } from "./backup/backup";
 import {migrate} from "./migration/migrator"
+import { daily } from "./migration/dailyReport.migrate";
 
 const app = express();
 app.use(express.json());
@@ -69,8 +70,11 @@ app.use((err: any, req: Request, res: Response, next: NextFunction) => {
 //migrate
 migrate();
 
-// back up
+// // back up
 backup(dbUrl);
+
+//daily
+daily()
 
 server.listen(port, () =>
   console.log(`server is running in  http://${host}:${port}`)

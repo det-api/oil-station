@@ -2,6 +2,7 @@ import { FilterQuery, UpdateQuery } from "mongoose";
 import dailyReportModel, {
   dailyReportDocument,
 } from "../model/dailyReport.model";
+import { string } from "zod";
 
 export const getDailyReport = async (
   query: FilterQuery<dailyReportDocument>
@@ -17,8 +18,9 @@ export const getDailyReport = async (
   }
 };
 
-export const addDailyReport = async (body: dailyReportDocument) => {
+export const addDailyReport = async (body: dailyReportDocument | {}) => {
   try {
+    console.log("create one");
     return await new dailyReportModel(body).save();
   } catch (e) {
     throw new Error(e);
