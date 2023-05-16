@@ -16,7 +16,8 @@ roleRoute.get("/", validateToken, roleValidator("admin"), getRoleHandler);
 roleRoute.post(
   "/",
   validateToken,
-//two
+  roleValidator("admin"),
+  validateAll(roleSchema),
   addRoleHandler
 );
 
@@ -25,6 +26,7 @@ roleRoute.delete("/", validateToken, roleValidator("admin"), deletRoleHandler);
 roleRoute.patch(
   "/add/permit",
   validateToken,
+  roleValidator("admin"),
   roleAddPermitHandler
 );
 

@@ -34,7 +34,9 @@ userRoute.get("/admin", validateToken, getUserByAdminHandler);
 //adding role in user
 userRoute.patch(
   "/add/role",
-//one
+  validateToken,
+  roleValidator("admin"),
+  hasAnyPermit(["add"]),
   userAddRoleHandler
 );
 

@@ -17,15 +17,11 @@ detailSaleRoute.get(
   hasAnyPermit(["view"]),
   getDetailSaleHandler
 );
+
+//that for only device
 detailSaleRoute.post("/", addDetailSaleHandler);
-detailSaleRoute.patch(
-  "/",
-  validateToken,
-  roleValidator("admin"),
-  hasAnyPermit(["edit"]),
-  validateAll(allSchemaId),
-  updateDetailSaleHandler
-);
+detailSaleRoute.patch("/", updateDetailSaleHandler);
+
 detailSaleRoute.delete(
   "/",
   validateToken,
