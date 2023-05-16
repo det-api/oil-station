@@ -8,7 +8,6 @@ const MongoClient = require("mongodb").MongoClient;
 
 async function getCollectionData(databaseName, collectionName, dbUrl) {
   try {
-
     const client = new MongoClient(dbUrl, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
@@ -41,7 +40,7 @@ async function createBackup(dbUrl) {
     console.log(`Created backup directory at ${backupDirectory}`);
   }
 
-  const documents = await getCollectionData("test", "detailsales" , dbUrl);
+  const documents = await getCollectionData("test", "detailsales", dbUrl);
 
   // Write the data to a file
   const dataWriteStream = fs.createWriteStream(backupFilePath);
@@ -53,5 +52,6 @@ async function createBackup(dbUrl) {
   console.log("complete backup" + new Date());
 }
 
-// 
-export const backup = (dbUrl) => cron.schedule("* * * * *", () => createBackup(dbUrl));
+//
+export const backup = (dbUrl) =>
+  cron.schedule("0 0 * * *", () => createBackup(dbUrl));

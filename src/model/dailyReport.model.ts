@@ -15,17 +15,7 @@ const dailyReportSchema = new Schema({
   },
   allTotalLizerLiter: { type: Number, default: 0 },
   allTotalLizerPrice: { type: Number, default: 0 },
-  date: {
-    type: Date,
-    default: new Date(),
-    get: function (val) {
-      return val.toLocaleString("en-US");
-    },
-    set: function (val) {
-      return new Date(val);
-    },
-    unique: true,
-  },
+  date: { type: Date, default: new Date() },
 });
 
 const dailyReportModel = mongoose.model<dailyReportDocument>(

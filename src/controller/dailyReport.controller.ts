@@ -9,6 +9,7 @@ import {
 } from "../service/dailyReport.service";
 import { getOneDailyPrice } from "../service/dailyPrice.service";
 import {
+  // detailSaleByDate,
   getDetailSale,
   getDetailSaleByFuelType,
 } from "../service/detailSale.service";
@@ -23,13 +24,7 @@ export const getDailyReportHandler = async (
 
     await Promise.all(
       result.map(async (ea) => {
-        let prices = await getOneDailyPrice({ date: ea["date"] });
-        ea["prices"] = prices[0];
-      })
-    );
-
-    await Promise.all(
-      result.map(async (ea) => {
+        // console.log(ea)
         ea["ninety-two"] = await getDetailSaleByFuelType(ea["_id"], "92");
         ea["ninety-five"] = await getDetailSaleByFuelType(ea["_id"], "95");
         ea["HSD"] = await getDetailSaleByFuelType(ea["_id"], "HSD");
@@ -151,7 +146,6 @@ export const getDailyReportByDateHandler = async (
     const resultWithDetails = await Promise.all(
       result.map(async (ea) => {
         let prices = await getOneDailyPrice({ date: ea["date"] });
-        ea["prices"] = prices[0];
         ea["ninety-two"] = await getDetailSaleByFuelType(ea["_id"], "92");
         ea["ninety-five"] = await getDetailSaleByFuelType(ea["_id"], "95");
         ea["HSD"] = await getDetailSaleByFuelType(ea["_id"], "HSD");
@@ -175,3 +169,33 @@ export const getDailyReportByDateHandler = async (
     next(new Error(e));
   }
 };
+
+// export const getDailyReportTest = async (
+//   req: Request,
+//   res: Response,
+//   next: NextFunction
+// ) => {
+//   try {
+//     let result = await getDailyReport(req.query);
+
+//     let ans = await Promise.all(
+//       result.map(async (ea) => {
+//         let sDate = ea.date;
+//         let eDate: any = ea.date;
+//         if (!sDate) {
+//           throw new Error("you need date");
+//         }
+
+//         //if date error ? you should use split with T or be sure detail Id
+//         const startDate = new Date(sDate).toLocaleDateString(`fr-CA`);
+//         const endDate = new Date(eDate).toLocaleDateString(`fr-CA`);
+//         let result = await detailSaleByDate(startDate, endDate);
+//         return result;
+//       })
+//     );
+//     fMsg(res, "between two date", ans);
+
+//   } catch (e) {
+//     next(new Error(e));
+//   }
+// };

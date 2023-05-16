@@ -28,40 +28,11 @@ const server = require("http").createServer(app);
 const port = config.get<number>("port");
 const host = config.get<string>("host");
 const dbUrl = config.get<string>("dbUrl");
-const mqttUrl = config.get<string>("mqttUrl");
-const mqttUser = config.get<string>("mqttUser");
-const mqttPassword = config.get<string>("mqttPassword");
+
 
 //mongodb connection
 
 mongoose.connect(dbUrl);
-
-//mqtt connection
-
-export const client = mqtt.connect(mqttUrl, {
-  username: mqttUser,
-  password: mqttPassword,
-});
-
-let sub_topic = "general";
-
-const connect = () => {
-  client.subscribe("#", { qos: 0 }, function (err) {
-    if (err) {
-      console.log("An error occurred while subscribing");
-    } else {
-      console.log("Subscribed successfully to " + sub_topic.toString());
-    }
-  });
-};
-
-client.on("connect", connect);
-
-//topic come from mqtt
-
-client.on("message", async (topic, message) => {
-  // console.log(topic, "///", message.toString());
-});
 
 // request routes
 
@@ -99,8 +70,7 @@ app.use((err: any, req: Request, res: Response, next: NextFunction) => {
 migrate();
 
 // back up
-
-// backup(dbUrl);
+backup(dbUrl);
 
 server.listen(port, () =>
   console.log(`server is running in  http://${host}:${port}`)

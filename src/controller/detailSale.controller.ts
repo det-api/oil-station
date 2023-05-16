@@ -1,6 +1,11 @@
 import { Request, Response, NextFunction } from "express";
 import fMsg from "../utils/helper";
-import { getDetailSale , addDetailSale , updateDetailSale , deleteDetailSale } from "../service/detailSale.service";
+import {
+  getDetailSale,
+  addDetailSale,
+  updateDetailSale,
+  deleteDetailSale,
+} from "../service/detailSale.service";
 
 export const getDetailSaleHandler = async (
   req: Request,
@@ -21,7 +26,6 @@ export const addDetailSaleHandler = async (
   next: NextFunction
 ) => {
   try {
-    console.log(req.body)
     let result = await addDetailSale(req.body);
     fMsg(res, "New DetailSale data was added", result);
   } catch (e) {

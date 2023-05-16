@@ -1,31 +1,52 @@
 import mongoose, { Schema } from "mongoose";
+import { getDailyReportByDate } from "../service/dailyReport.service";
 
 export interface detailSaleDocument extends mongoose.Document {
-  pprd_license_number: string;
-  voucher_number: string;
+  stationDetailId: string;
+  dailyReportId: string;
+  vocono: string;
   carNo: string;
   vehicleType: string;
-  // nozzleNo: number;
-  fuel_type: string;
-  sale_price: number;
-  sale_liter: number;
-  total_price: number;
+  nozzleNo: number;
+  fuelType: string;
+  salePrice: number;
+  saleLiter: number;
+  totalPrice: number;
   totalizer_liter: number;
   createAt: Date;
 }
 
 const detailSaleSchema = new Schema({
-  pprd_license_number: { type: Schema.Types.ObjectId },
-  voucher_number: { type: String, required: true, unique: true },
+  stationDetailId: { type: Schema.Types.ObjectId, ref: "stationDetail" },
+  dailyReportId: { type: Schema.Types.ObjectId, ref: "dailyReport" },
+  vocono: { type: String, required: true, unique: true },
   carNo: { type: String, default: null }, //manual
   vehicleType: { type: String, default: "car" }, //manual
-  // nozzleNo: { type: Number, required: true },
-  fuel_type: { type: String, require: true },
-  sale_price: { type: Number, default: 0 },
-  sale_liter: { type: Number, default: 0 },
-  total_price: { type: Number, default: 0 },
+  nozzleNo: { type: Number, required: true },
+  fuelType: { type: String, require: true },
+  salePrice: { type: Number, default: 0 },
+  saleLiter: { type: Number, default: 0 },
+  totalPrice: { type: Number, default: 0 },
   totalizer_liter: { type: Number, default: 0 },
   createAt: { type: Date, default: new Date() },
+});
+
+detailSaleSchema.pre("save", async function (next) {
+  const detail = this as unknown as detailSaleDocument;
+
+  const startDate = new Date(detail.createAt).toISOString();
+  // const endDate = new Date(detail.createAt).toISOString();
+  const [date, time] = startDate.split("T");
+  let result = await getDailyReportByDate(date, date);
+
+  if (result.length != 1) {
+    console.log("warinning error in detailsale model");
+    return;
+  }
+
+  detail.dailyReportId = result[0]._id;
+
+  return next();
 });
 
 const detailSaleModel = mongoose.model<detailSaleDocument>(

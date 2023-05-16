@@ -51,12 +51,32 @@ export const getDetailSaleByFuelType = async (
     dailyReportId: dailyReportId,
     fuelType: fuelType,
   });
+  // console.log(fuel)
   let fuelLength = fuel.length ? +1 : 0;
   let fuelLiter = fuel
-    .map((ea) => ea["liter"])
+    .map((ea) => ea["saleLiter"])
     .reduce((pv: number, cv: number): number => pv + cv, 0);
   let fuelAmount = fuel
-    .map((ea) => ea["amount"])
+    .map((ea) => ea["totalPrice"])
     .reduce((pv: number, cv: number): number => pv + cv, 0);
   return { count: fuelLength, liter: fuelLiter, price: fuelAmount };
 };
+
+// export const detailSaleByDate = async (
+//   d1: any,
+//   d2: any
+// ) => {
+//   let result = await detailSaleModel.find({
+//     createAt: { $gte: `${d1}T00:00:00Z`, $lte: `${d2}T23:59:59Z` },
+//   });
+//   let PHSD = result.filter((ea) => ea.fuelType == "PHSD");
+//   let nineTwo = result.filter((ea) => ea.fuelType == "92");
+//   let nineFive = result.filter((ea) => ea.fuelType == "95");
+//   let nineSeven = result.filter((ea) => ea.fuelType == "97");
+//   let HSD = result.filter((ea) => ea.fuelType == "HSD");
+
+//   PHSD.reduce(ea)
+//   return [
+
+//   ];
+// };

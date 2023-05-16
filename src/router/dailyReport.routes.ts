@@ -4,6 +4,7 @@ import {
   updateDailyReportHandler,
   deleteDailyReportHandler,
   getDailyReportByDateHandler,
+  // getDailyReportTest,
 } from "../controller/dailyReport.controller";
 import { hasAnyPermit } from "../middleware/permitValidator";
 import { roleValidator } from "../middleware/roleValidator";
@@ -48,5 +49,10 @@ dailyReportRoute.get(
   hasAnyPermit(["view"]),
   getDailyReportByDateHandler
 );
+
+// dailyReportRoute.get(
+//   "/test",
+//   getDailyReportTest
+// );
 
 export default dailyReportRoute;
