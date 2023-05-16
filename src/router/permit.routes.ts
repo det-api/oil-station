@@ -12,9 +12,7 @@ const permitRoute = require("express").Router();
 permitRoute.get("/", validateToken, roleValidator("admin"), getPermitHandler);
 permitRoute.post(
   "/",
-  validateAll(permitSchema),
-  validateToken,
-  roleValidator("admin"),
+  //four
   addPermitHandler
 );
 permitRoute.delete(
