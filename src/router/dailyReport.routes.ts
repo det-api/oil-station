@@ -50,9 +50,4 @@ dailyReportRoute.get(
   getDailyReportByDateHandler
 );
 
-// dailyReportRoute.get(
-//   "/test",
-//   getDailyReportTest
-// );
-
 export default dailyReportRoute;

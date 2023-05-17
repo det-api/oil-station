@@ -2,6 +2,7 @@ import mongoose, { Schema } from "mongoose";
 
 export interface dailyReportDocument extends mongoose.Document {
   stationId: string;
+  dateOfDay : string;
   date: Date;
 }
 
@@ -11,6 +12,7 @@ const dailyReportSchema = new Schema({
     ref: "stationDetail",
     required: true,
   },
+  dateOfDay : {type : String , default : new Date().toLocaleDateString(`fr-CA`)},
   date: { type: Date, default: new Date() },
 });
 

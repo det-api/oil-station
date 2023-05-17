@@ -65,25 +65,27 @@ export const detailSaleSchema = object({
 });
 
 export const fuelInSchema = object({
-    body: object({
-        driver: string({
-        required_error: "name is required",
-      }),
-      bowser: string({
-        required_error: "location is required",
-      }),
-      fuelName: string({
-        required_error: "fuelName is required",
-      }),
-      tank: string({
-        required_error: "tank is required",
-      }),
-      station: string({
-        required_error: "station is required",
-      }),
-      recieveVolume: string({
-        required_error: "recieveVolume is required",
-      }),
+  body: object({
+    tankNo: string({
+      required_error: "tankNo is required",
     }),
-  });
-  
+    tankMaxCap: string({
+      required_error: "tankMaxCap is required",
+    }),
+    fuelType: string({
+      required_error: "fuelType is required",
+    }),
+    tankLevel: string({
+      required_error: "tankLevel is required",
+    }),
+    tankLevelLG: string({
+      required_error: "tankLevelLG is required",
+    }),
+    availableToFill: string({
+      required_error: "availableToFill is required",
+    }),
+    tankTemp: string({
+      required_error: "tankTemp is required",
+    }),
+  }),
+});

@@ -25,7 +25,7 @@ export const getDailyReportHandler = async (
     await Promise.all(
       result.map(async (ea) => {
         // console.log(ea)
-        ea["ninety-two"] = await getDetailSaleByFuelType(ea["_id"], "92");
+        ea["ninety-two"] = await getDetailSaleByFuelType(ea["dateOfDay"], "92");
         ea["ninety-five"] = await getDetailSaleByFuelType(ea["_id"], "95");
         ea["HSD"] = await getDetailSaleByFuelType(ea["_id"], "HSD");
         ea["PHSD"] = await getDetailSaleByFuelType(ea["_id"], "PHSD");
@@ -145,11 +145,13 @@ export const getDailyReportByDateHandler = async (
     }
     const resultWithDetails = await Promise.all(
       result.map(async (ea) => {
-        let prices = await getOneDailyPrice({ date: ea["date"] });
-        ea["ninety-two"] = await getDetailSaleByFuelType(ea["_id"], "92");
-        ea["ninety-five"] = await getDetailSaleByFuelType(ea["_id"], "95");
-        ea["HSD"] = await getDetailSaleByFuelType(ea["_id"], "HSD");
-        ea["PHSD"] = await getDetailSaleByFuelType(ea["_id"], "PHSD");
+        ea["ninety-two"] = await getDetailSaleByFuelType(ea["dateOfDay"], "92");
+        ea["ninety-five"] = await getDetailSaleByFuelType(
+          ea["dateOfDay"],
+          "95"
+        );
+        ea["HSD"] = await getDetailSaleByFuelType(ea["dateOfDay"], "HSD");
+        ea["PHSD"] = await getDetailSaleByFuelType(ea["dateOfDay"], "PHSD");
         return {
           _id: ea["_id"],
           stationId: ea["stationId"],

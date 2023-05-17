@@ -44,11 +44,11 @@ export const deleteDetailSale = async (
 };
 
 export const getDetailSaleByFuelType = async (
-  dailyReportId: string,
+  dateOfDay: string,
   fuelType: string
 ) => {
   let fuel = await getDetailSale({
-    dailyReportId: dailyReportId,
+    dailyReportDate: dateOfDay,
     fuelType: fuelType,
   });
   // console.log(fuel)

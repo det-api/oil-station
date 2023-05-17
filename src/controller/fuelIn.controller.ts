@@ -1,6 +1,11 @@
 import { Request, Response, NextFunction } from "express";
 import fMsg from "../utils/helper";
-import { getFuelIn , addFuelIn ,updateFuelIn ,deleteFuelIn } from "../service/fuelIn.service";
+import {
+  getFuelIn,
+  addFuelIn,
+  updateFuelIn,
+  deleteFuelIn,
+} from "../service/fuelIn.service";
 
 export const getFuelInHandler = async (
   req: Request,
