@@ -5,6 +5,7 @@ import {
   getUser,
   loginUser,
   registerUser,
+  updateUser,
   userAddPermit,
   userAddRole,
   userRemovePermit,
@@ -62,6 +63,19 @@ export const getUserByAdminHandler = async (
   try {
     let result = await getUser(req.query);
     fMsg(res, "registered users", result);
+  } catch (e) {
+    next(new Error(e));
+  }
+};
+
+export const updateUserHandler = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    let result = await updateUser(req.query, req.body);
+    fMsg(res, "updated DailyReport data", result);
   } catch (e) {
     next(new Error(e));
   }

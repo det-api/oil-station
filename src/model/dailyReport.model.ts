@@ -1,4 +1,5 @@
 import mongoose, { Schema } from "mongoose";
+import moment , {MomentTimezone} from "moment-timezone";
 
 export interface dailyReportDocument extends mongoose.Document {
   stationId: string;
@@ -14,6 +15,12 @@ const dailyReportSchema = new Schema({
   },
   dateOfDay : {type : String , default : new Date().toLocaleDateString(`fr-CA`)},
   date: { type: Date, default: new Date() },
+});
+
+dailyReportSchema.pre('save', function (next) {
+  const currentDate = moment().tz('Asia/Yangon').format('YYYY-MM-DD');
+  this.dateOfDay = currentDate;
+  next();
 });
 
 const dailyReportModel = mongoose.model<dailyReportDocument>(

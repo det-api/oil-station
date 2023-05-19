@@ -13,6 +13,9 @@ import {
   getDetailSale,
   getDetailSaleByFuelType,
 } from "../service/detailSale.service";
+import moment from "moment-timezone";
+
+const currentDate = moment().tz("Asia/Yangon").format("YYYY-MM-DD");
 
 export const getDailyReportHandler = async (
   req: Request,
@@ -22,13 +25,26 @@ export const getDailyReportHandler = async (
   try {
     let result = await getDailyReport(req.query);
 
+    // let dailyDate = result.find((ea) => ea.dateOfDay == currentDate )
+    // if(!dailyDate){
+    //   console.log("wk")
+    // }
     await Promise.all(
       result.map(async (ea) => {
         // console.log(ea)
-        ea["ninety-two"] = await getDetailSaleByFuelType(ea["dateOfDay"], "92");
-        ea["ninety-five"] = await getDetailSaleByFuelType(ea["_id"], "95");
-        ea["HSD"] = await getDetailSaleByFuelType(ea["_id"], "HSD");
-        ea["PHSD"] = await getDetailSaleByFuelType(ea["_id"], "PHSD");
+        ea["ninety-two"] = await getDetailSaleByFuelType(
+          ea["dateOfDay"],
+          "001-Octance Ron(92)"
+        );
+        ea["ninety-five"] = await getDetailSaleByFuelType(
+          ea["_id"],
+          "002-Octance Ron(95)"
+        );
+        ea["HSD"] = await getDetailSaleByFuelType(ea["_id"], "004-Diesel");
+        ea["PHSD"] = await getDetailSaleByFuelType(
+          ea["_id"],
+          "005-Premium Diesel"
+        );
       })
     );
 
@@ -130,6 +146,7 @@ export const getDailyReportByDateHandler = async (
   try {
     let sDate = req.query.sDate;
     let eDate = req.query.eDate;
+    console.log(eDate);
     let result;
     if (!sDate) {
       throw new Error("you need date");
@@ -138,9 +155,12 @@ export const getDailyReportByDateHandler = async (
       eDate = new Date().toLocaleDateString(`fr-CA`);
     }
     if (typeof sDate === "string" && typeof eDate === "string") {
+      console.log("wk");
       //if date error ? you should use split with T or be sure detail Id
       const startDate = new Date(sDate).toLocaleDateString(`fr-CA`);
       const endDate = new Date(eDate).toLocaleDateString(`fr-CA`);
+      console.log(startDate, endDate);
+
       result = await getDailyReportByDate(startDate, endDate);
     }
     const resultWithDetails = await Promise.all(

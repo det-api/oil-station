@@ -3,7 +3,11 @@ import detailSaleModel, { detailSaleDocument } from "../model/detailSale.model";
 
 export const getDetailSale = async (query: FilterQuery<detailSaleDocument>) => {
   try {
-    return await detailSaleModel.find(query).lean().select("-__v");
+    return await detailSaleModel
+      .find(query)
+      .lean()
+      .populate("stationDetailId")
+      .select("-__v");
   } catch (e) {
     throw new Error(e);
   }
@@ -62,21 +66,3 @@ export const getDetailSaleByFuelType = async (
   return { count: fuelLength, liter: fuelLiter, price: fuelAmount };
 };
 
-// export const detailSaleByDate = async (
-//   d1: any,
-//   d2: any
-// ) => {
-//   let result = await detailSaleModel.find({
-//     createAt: { $gte: `${d1}T00:00:00Z`, $lte: `${d2}T23:59:59Z` },
-//   });
-//   let PHSD = result.filter((ea) => ea.fuelType == "PHSD");
-//   let nineTwo = result.filter((ea) => ea.fuelType == "92");
-//   let nineFive = result.filter((ea) => ea.fuelType == "95");
-//   let nineSeven = result.filter((ea) => ea.fuelType == "97");
-//   let HSD = result.filter((ea) => ea.fuelType == "HSD");
-
-//   PHSD.reduce(ea)
-//   return [
-
-//   ];
-// };

@@ -3,7 +3,7 @@ import fuelInModel, { fuelInDocument } from "../model/fuelIn.model";
 
 export const getFuelIn = async (query: FilterQuery<fuelInDocument>) => {
   try {
-    return await fuelInModel.find(query).lean().select("-__v");
+    return await fuelInModel.find(query).lean().populate('stationId').select("-__v");
   } catch (e) {
     throw new Error(e);
   }
