@@ -12,15 +12,15 @@ import { roleSchema } from "../utils/schema";
 const roleRoute = require("express").Router();
 
 roleRoute.get("/", 
-// validateToken, 
-// roleValidator("admin"),
+validateToken, 
+roleValidator("admin"),
 getRoleHandler);
 
 roleRoute.post(
   "/",
-  // validateToken,
-  // roleValidator("admin"),
-  // validateAll(roleSchema),
+  validateToken,
+  roleValidator("admin"),
+  validateAll(roleSchema),
   addRoleHandler
 );
 
@@ -28,8 +28,8 @@ roleRoute.delete("/", validateToken, roleValidator("admin"), deletRoleHandler);
 
 roleRoute.patch(
   "/add/permit",
-  // validateToken,
-  // roleValidator("admin"),
+  validateToken,
+  roleValidator("admin"),
   roleAddPermitHandler
 );
 
