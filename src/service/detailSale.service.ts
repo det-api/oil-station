@@ -55,7 +55,6 @@ export const getDetailSaleByFuelType = async (
     dailyReportDate: dateOfDay,
     fuelType: fuelType,
   });
-  // console.log(fuel)
   let fuelLength = fuel.length ? +1 : 0;
   let fuelLiter = fuel
     .map((ea) => ea["saleLiter"])
@@ -65,4 +64,3 @@ export const getDetailSaleByFuelType = async (
     .reduce((pv: number, cv: number): number => pv + cv, 0);
   return { count: fuelLength, liter: fuelLiter, price: fuelAmount };
 };
-

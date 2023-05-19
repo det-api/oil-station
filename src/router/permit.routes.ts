@@ -9,12 +9,18 @@ import { roleValidator } from "../middleware/roleValidator";
 
 const permitRoute = require("express").Router();
 
-permitRoute.get("/", validateToken, roleValidator("admin"), getPermitHandler);
+permitRoute.get(
+"/",
+// validateToken,
+// roleValidator("admin"),
+getPermitHandler
+);
+
 permitRoute.post(
   "/",
-  validateAll(permitSchema),
-  validateToken,
-  roleValidator("admin"),
+  // validateAll(permitSchema),
+  // validateToken,
+  // roleValidator("admin"),
   addPermitHandler
 );
 permitRoute.delete(

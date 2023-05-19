@@ -31,18 +31,21 @@ export const getDailyReportHandler = async (
     // }
     await Promise.all(
       result.map(async (ea) => {
-        // console.log(ea)
+        console.log(ea);
         ea["ninety-two"] = await getDetailSaleByFuelType(
           ea["dateOfDay"],
           "001-Octance Ron(92)"
         );
         ea["ninety-five"] = await getDetailSaleByFuelType(
-          ea["_id"],
+          ea["dateOfDay"],
           "002-Octance Ron(95)"
         );
-        ea["HSD"] = await getDetailSaleByFuelType(ea["_id"], "004-Diesel");
+        ea["HSD"] = await getDetailSaleByFuelType(
+          ea["dateOfDay"],
+          "004-Diesel"
+        );
         ea["PHSD"] = await getDetailSaleByFuelType(
-          ea["_id"],
+          ea["dateOfDay"],
           "005-Premium Diesel"
         );
       })
